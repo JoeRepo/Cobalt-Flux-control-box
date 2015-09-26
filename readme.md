@@ -4,7 +4,7 @@ Since the Cobalt Flux is just a bunch of switches, this is really easy.
 
 ### What You'll Need ###
 * An Arduino 
-* A breadboard, or any prototyping board
+* A breadboard, or any circuit board
 * wires
 * A solderable male HD15 (VGA) connector (optional but recommended)
 
@@ -12,7 +12,7 @@ Since the Cobalt Flux is just a bunch of switches, this is really easy.
 First, you're going to want to flash your Arduino firmware to the most recent version if it currently isn't using [this guide](https://www.arduino.cc/en/Hacking/DFUProgramming8U2).
 After that, you can upload the code to the Arduino.
 
-Since we can't send out keyboard input with the current firmware, we'll need to flash it (just like we flashed the firmware before) with USB HID firmware found [here](http://dl.dropbox.com/u/1816557/Arduino-keyboard-0.3.hex).
+Since we can't send out keyboard input with the current firmware, we'll need to flash it (just like we flashed the firmware before) with USB HID keyboard firmware found [here](http://dl.dropbox.com/u/1816557/Arduino-keyboard-0.3.hex).
 
 Once that's done, we can make our circuit.
 
