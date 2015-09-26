@@ -1,5 +1,5 @@
 # Overview #
-Since adapters for the Cobalt Flux dance pad stopped working around 32-bit Windows XP, I decided to create one using an Arduino Uno and a circuit.
+Since Playstation 2 to USB adapters for the Cobalt Flux stopped working around 32-bit Windows XP, and I've been deprived of ITG, I decided to completely replace my control box with an Arduino and a circuit.
 Since the Cobalt Flux is just a bunch of switches, this is really easy.
 
 ### What You'll Need ###
@@ -59,6 +59,8 @@ So for writing new code, the steps would be
 5. Unplug it and plug it back in
 
 If you wanted to change the code keypresses to follow your Stepmania settings, you would have to follow the USB HID keyboard usage table, found [here](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CB0QFjAAahUKEwip6aTBz4zIAhUGcj4KHRHWCwg&url=http%3A%2F%2Fwww.usb.org%2Fdevelopers%2Fhidpage%2FHut1_12v2.pdf&usg=AFQjCNEun33wLDX52uUN7p6F2mf0s_3D9g&sig2=RnA2Bnpq8FVhPE8Qz8fBTA&bvm=bv.103388427,d.cWw).
+
+I have firmware debouncing in the form of a 5ms delay between presses, so you may have to adjust your offset in Stepmania to compensate.
 
 # References #
 [keyboard firmware from here](http://mitchtech.net/arduino-usb-hid-keyboard/)  
