@@ -49,6 +49,8 @@ Down Left is shift + enter (default sort)
 You can change these in your Stepmania settings to match the code, or change them in the code to match your Stepmania settings.
 
 # Notes #
+This guide is was only tested with the Arduino Uno.  If you're using a different version, you might have to dig around for different firmwares, or none at all.
+
 If you wanted to change the code uploaded to the Arduino, you would have to flash it back to the previous firmware so that it can be recognized as an Arduino.
 So for writing new code, the steps would be
 
