@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 // From USB HID documentation
 #define KEY_W 0x1A
 #define KEY_S 0x16
@@ -16,50 +18,59 @@
 #define PIN_ENTER 12
 #define PIN_GROUP 13
 
-#define FIRMWARE_DEBOUNCE 1
+#define USBHID_BUF_SIZE 8
 
-struct panel {
+#define FIRMWARE_DEBOUNCE
+// Delay is in ms, adjust as needed
+#define FIRMWARE_DEBOUNCE_DELAY 5
+
+typedef struct {
     uint8_t pin;
     uint8_t modkey;
     uint8_t keycode;
     uint8_t state;
-    char name[6]; // Not used, but good for clarification
-} panels[] = {
-  { PIN_UP, MOD_NONE, KEY_W, HIGH, "up" },
-  { PIN_DOWN, MOD_NONE, KEY_S, HIGH, "down" },
-  { PIN_LEFT, MOD_NONE, KEY_A, HIGH, "left" },
-  { PIN_RIGHT, MOD_NONE, KEY_D, HIGH, "right" },
-  { PIN_ESC, MOD_NONE, KEY_ESC, HIGH, "exit" },
-  { PIN_ENTER, MOD_NONE, KEY_ENTER, HIGH, "start" },
-  { PIN_GROUP, MOD_RSHIFT, KEY_ENTER, HIGH, "group" }
+} panel_t;
+
+void get_states(panel_t *panels, uint8_t num_panels);
+void write_keys(const panel_t *panels, uint8_t num_panels);
+
+panel_t panels[] = {
+  { PIN_UP, MOD_NONE, KEY_W, HIGH},
+  { PIN_DOWN, MOD_NONE, KEY_S, HIGH},
+  { PIN_LEFT, MOD_NONE, KEY_A, HIGH},
+  { PIN_RIGHT, MOD_NONE, KEY_D, HIGH},
+  { PIN_ESC, MOD_NONE, KEY_ESC, HIGH},
+  { PIN_ENTER, MOD_NONE, KEY_ENTER, HIGH},
+  { PIN_GROUP, MOD_RSHIFT, KEY_ENTER, HIGH}
 };
 
-uint8_t NUM_PANELS = sizeof(panels)/sizeof(panel);
+#define NUM_PANELS (sizeof(panels)/sizeof(panels[0]));
 
-void get_states(void)
+void get_states(panel_t *panels, uint8_t num_panels)
 {
     uint8_t i;
-    for (i=0; i<NUM_PANELS; ++i) {
+	
+    for (i=0; i<num_panels; ++i) {
     	panels[i].state = digitalRead(panels[i].pin);
     }
 }
 
-void write_keys(void)
+void write_keys(const panel_t *panels, uint8_t num_panels)
 {
-    uint8_t buf[8] = {0}; // Keyboard buffer
+    uint8_t buf[USBHID_BUF_SIZE] = {0}; // Keyboard buffer
     uint8_t slot = 2; // Slots 2-7 are for keys
-    uint8_t max_slot = 8;
     uint8_t i;
 	
     // Go through each panel and check their state
-    for (i=0; i< NUM_PANELS; ++i) {
+    for (i=0; i< num_panels; ++i) {
 	if (panels[i].state == LOW) { // The panel is pressed
             if (panels[i].modkey != MOD_NONE) {
 		buf[0] |= panels[i].modkey;
 	    }
 	    buf[slot] = panels[i].keycode; // Add it to the buffer
 	    ++slot;
-	    if (slot >= max_slot) { // Overflow check
+		
+	    if (slot >= (sizeof(buf)/sizeof(buf[0])) { // Overflow check
 		break;
 	    }
 	}
@@ -71,6 +82,7 @@ void write_keys(void)
 void setup(void) 
 {
     uint8_t i;
+	
     for (i=0; i<NUM_PANELS; ++i) {
 	pinMode(panels[i].pin, INPUT_PULLUP);
     }
@@ -80,10 +92,10 @@ void setup(void)
 
 void loop(void)
 {
-    get_states();
-    write_keys();
+    get_states(panels, NUM_PANELS);
+    write_keys(panels, NUM_PANELS);
     
-    #ifdef FIRMWARE_DEBOUNCE
-    delay(5); // could possibly need to be changed
+    #if defined(FIRMWARE_DEBOUNCE)
+    delay(FIRMWARE_DEBOUNCE_DELAY); 
     #endif
 }
