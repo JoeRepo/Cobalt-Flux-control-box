@@ -31,10 +31,8 @@ Up Right is connected to D12
 Down Left is connected to D13  
 
 
-If you don't have a male HD15 connector that you can solder wires to, you can stick the jumper cables in the female HD15 connector attached to the Cobalt Flux, however I wouldn't recommend it.
+If you don't have a male HD15 connector that you can solder wires to, you can stick the jumper cables in the female HD15 connector attached to the Cobalt Flux.
 
-Here's what my circuit looked like.
-![my loadout](http://i.imgur.com/crnClZX.jpg)
 # Usage #
 The current mapping I have from pin to keypresses are:
 
@@ -49,7 +47,7 @@ Down Left is shift + enter (default sort)
 You can change these in your Stepmania settings to match the code, or change them in the code to match your Stepmania settings.
 
 # Notes #
-This guide is was only tested with the Arduino Uno.  If you're using a different version, you might have to dig around for different firmwares, or none at all.
+This guide is was only tested with the Arduino Uno.  If you're using a different version, you might have to dig around for different firmware.
 
 If you wanted to change the code uploaded to the Arduino, you would have to flash it back to the previous firmware so that it can be recognized as an Arduino.
 So for writing new code, the steps would be
